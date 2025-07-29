@@ -1,0 +1,11 @@
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: cr-bdgateway-dismount
+spec:
+  template:
+    spec:
+      template:
+        spec:
+          containers:
+            - image: us-central1-docker.pkg.dev/PROJECT/docker-bdgateway/bdgateway-dismount:latest

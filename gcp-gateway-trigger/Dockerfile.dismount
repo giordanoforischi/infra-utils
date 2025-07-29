@@ -1,0 +1,25 @@
+# Start from the official Terraform Docker image
+FROM hashicorp/terraform:light
+
+# Set the working directory inside the container
+WORKDIR /workspace
+
+# Copy Terraform files (e.g., .tf files) from the local host to the container
+COPY ./tf_files/ /workspace/
+
+# Copy the service account key file into the container
+COPY ./secret/sa.json /workspace/sa.json
+
+# Copy the script into the container
+COPY sh_dismount.sh /start.sh
+
+# Set the GOOGLE_APPLICATION_CREDENTIALS environment variable to the location of the service account key
+ENV GOOGLE_APPLICATION_CREDENTIALS="/workspace/sa.json"
+
+# Make sure the shell script is executable
+RUN chmod +x /start.sh
+
+ENTRYPOINT ["sh"]
+
+# Run the shell script as the container’s entry point
+CMD ["/start.sh"]
